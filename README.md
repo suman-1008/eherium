@@ -1,30 +1,66 @@
-ExampleToken Smart Contract
-This repository contains a simple implementation of a token smart contract named ExampleToken written in Solidity. ExampleToken allows for minting and burning of tokens, as well as tracking balances of token holders.
+# myTOKEN
 
-Smart Contract Details
-Public Variables
-Token Name: The name of the token is stored in the tokenName variable.
-Token Abbreviation: The abbreviation of the token is stored in the tokenAbbrv variable.
-Total Supply: The total supply of the token is tracked by the totalSupply variable.
-Mapping
-Balances: A mapping of addresses to token balances is implemented using the balances mapping.
-Functions
-Mint Function:
+`myTOKEN` is a simple Ethereum smart contract written in Solidity that implements a basic ERC20-like token with minting and burning capabilities.
 
-Description: This function mints new tokens and assigns them to a specified address.
-Parameters:
-_address: The address to which the new tokens will be minted.
-_value: The amount of tokens to mint.
-Functionality: Increases the total supply by the specified amount and increases the balance of the specified address accordingly.
-Burn Function:
+## Features
 
-Description: This function burns existing tokens from a specified address.
-Parameters:
-_address: The address from which tokens will be burned.
-_value: The amount of tokens to burn.
-Functionality: Checks if the address has sufficient balance to burn the specified amount of tokens. If so, it decreases the total supply and the balance of the specified address accordingly.
-Usage
-To use this smart contract, you can deploy it on an Ethereum-compatible blockchain network. Once deployed, you can interact with it using Ethereum wallet applications or by calling its functions programmatically.
+- Public variables to store details about the token:
+  - Token Name
+  - Token Abbreviation
+  - Total Supply
+- A mapping to store balances of addresses.
+- A `mint` function to create new tokens.
+- A `burn` function to destroy tokens.
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Requirements
+
+1. The contract has public variables to store details about the token:
+   - Token Name
+   - Token Abbreviation
+   - Total Supply
+
+2. The contract has a mapping of addresses to balances:
+   ```solidity
+   mapping(address => uint) public balances;
+   ```
+
+3. The contract has a `mint` function that:
+   - Takes an address and a value as parameters.
+   - Increases the total supply by the specified value.
+   - Increases the balance of the specified address by the same amount.
+
+4. The contract has a `burn` function that:
+   - Takes an address and a value as parameters.
+   - Decreases the total supply by the specified value.
+   - Decreases the balance of the specified address by the same amount.
+   - Checks to ensure the balance of the specified address is greater than or equal to the value to be burned.
+
+## Functions
+
+### mint
+
+```solidity
+function mint(address _address, uint _value) public {
+    total_Supply += _value;
+    balances[_address] += _value;
+}
+```
+
+Increases the total supply and the balance of the specified address by the given value.
+
+### burn
+
+```solidity
+function burn(address _address, uint _value) public {
+    if(balances[_address] >= _value) {
+        total_Supply -= _value;
+        balances[_address] -= _value;
+    }
+}
+```
+
+Decreases the total supply and the balance of the specified address by the given value. Ensures that the balance is sufficient before performing the burn.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
